@@ -13,6 +13,7 @@ namespace DWenzel\NotificationService\Domain\Model;
 
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 /**
  * Notification
@@ -71,6 +72,16 @@ class Notification extends AbstractEntity
      * @lazy
      */
     protected $attachments;
+
+    /**
+     * Initializes all \TYPO3\CMS\Extbase\Persistence\ObjectStorage properties.
+     *
+     * @return void
+     */
+    public function initializeObject()
+    {
+        $this->attachments = new ObjectStorage();
+    }
 
     /**
      * Returns the recipient

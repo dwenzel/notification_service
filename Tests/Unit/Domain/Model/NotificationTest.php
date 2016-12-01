@@ -4,6 +4,8 @@ namespace DWenzel\NotificationService\Tests\Unit\Domain\Model;
 
 use DWenzel\NotificationService\Domain\Model\Notification;
 use TYPO3\CMS\Core\Tests\UnitTestCase;
+use TYPO3\CMS\Extbase\Domain\Model\FileReference;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 /**
  * Class NotificationTest
@@ -22,6 +24,18 @@ class NotificationTest extends UnitTestCase
     {
         $this->subject = $this->getAccessibleMock(
             Notification::class, ['dummy']
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function initializeObjectsSetsObjectStorage()
+    {
+        $this->subject->initializeObject();
+        $this->assertInstanceOf(
+            ObjectStorage::class,
+            $this->subject->getAttachments()
         );
     }
 
@@ -184,6 +198,58 @@ class NotificationTest extends UnitTestCase
         $this->assertSame(
             $name,
             $this->subject->getSenderName()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function setAttachmentForObjectStorageContainingAttachmentSetsAttachment()
+    {
+        $attachment = new FileReference();
+        $objectStorageHoldingExactlyOneAttachment = new ObjectStorage();
+        $objectStorageHoldingExactlyOneAttachment->attach($attachment);
+        $this->subject->setAttachments($objectStorageHoldingExactlyOneAttachment);
+
+        $this->assertSame(
+            $objectStorageHoldingExactlyOneAttachment,
+            $this->subject->getAttachments()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function addAttachmentToObjectStorageHoldingAttachment()
+    {
+        $this->subject->initializeObject();
+        $attachment = new FileReference();
+        $objectStorageHoldingExactlyOneAttachment = new ObjectStorage();
+        $objectStorageHoldingExactlyOneAttachment->attach($attachment);
+        $this->subject->addAttachment($attachment);
+
+        $this->assertEquals(
+            $objectStorageHoldingExactlyOneAttachment,
+            $this->subject->getAttachments()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function removeAttachmentFromObjectStorageHoldingAttachment()
+    {
+        $this->subject->initializeObject();
+        $attachment = new FileReference();
+        $localObjectStorage = new ObjectStorage();
+        $localObjectStorage->attach($attachment);
+        $localObjectStorage->detach($attachment);
+        $this->subject->addAttachment($attachment);
+        $this->subject->removeAttachment($attachment);
+
+        $this->assertEquals(
+            $localObjectStorage,
+            $this->subject->getAttachments()
         );
     }
 }
