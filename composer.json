@@ -1,19 +1,26 @@
 {
-	"name": "dwenzel/notification_service",
-	"type": "typo3-cms-extension",
-	"description": "Notification service extension for the TYPO3 CMS",
-	"keywords": ["TYPO3", "extension", "service", "notification"],
-	"license": ["GPL-2.0+"],
-	"authors": [
-		{
-			"name": "Dirk Wenzel",
-			"role": "Developer"
-		}
-	],
-	"require": {
-		"typo3/cms-core": ">=6.2.0,<8.4"
-	},
-	"require-dev": {
+  "name": "dwenzel/notification_service",
+  "type": "typo3-cms-extension",
+  "description": "Notification service extension for the TYPO3 CMS",
+  "keywords": [
+    "TYPO3",
+    "extension",
+    "service",
+    "notification"
+  ],
+  "license": [
+    "GPL-2.0+"
+  ],
+  "authors": [
+    {
+      "name": "Dirk Wenzel",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "typo3/cms-core": ">=6.2.0,<8.4"
+  },
+  "require-dev": {
     "mikey179/vfsStream": "1.4.*@dev",
     "phpunit/phpunit": "~4.8.0"
   },
@@ -30,7 +37,6 @@
     }
   },
   "replace": {
-    "notification_service": "self.version",
     "typo3-ter/notification_service": "self.version"
   },
   "config": {
