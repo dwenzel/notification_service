@@ -5,5 +5,21 @@
 Notification Service
 ====================
 
-Allows to send notifications.
-This is a extension for the TYPO3 CMS. 
+Provides notification services for the TYPO3 CMS. 
+
+Currently an email notification service is available.  
+
+
+## Table of Contents
+
+* [Introduction](./Documentation/Introduction.md)
+* Configuration
+    * [Overview](./Documentation/Configuration.md)
+* Administrators Manual
+    * [Installation](./Documentation/AdministratorsManual/Installation.md)
+    * [Configuration](./Documentation/AdministatorsManual/Configuration.md)
+
+
+### Future plans
+ We plan to implement a notification service for TYPO3 backend users. Suggestions and contributions are highly welcome.
+ 

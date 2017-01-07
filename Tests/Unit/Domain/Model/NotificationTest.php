@@ -3,6 +3,7 @@ namespace DWenzel\NotificationService\Tests\Unit\Domain\Model;
 
 
 use DWenzel\NotificationService\Domain\Model\Notification;
+use DWenzel\NotificationService\Domain\Model\NotificationInterface;
 use TYPO3\CMS\Core\Tests\UnitTestCase;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
@@ -16,7 +17,7 @@ class NotificationTest extends UnitTestCase
 {
 
     /**
-     * @var \DWenzel\NotificationService\Domain\Model\Notification
+     * @var NotificationInterface
      */
     protected $subject;
 

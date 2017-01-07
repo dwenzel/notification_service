@@ -18,7 +18,7 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 /**
  * Notification
  */
-class Notification extends AbstractEntity
+class Notification extends AbstractEntity implements NotificationInterface
 {
 
     /**

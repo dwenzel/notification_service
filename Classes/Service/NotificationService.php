@@ -12,7 +12,9 @@ namespace DWenzel\NotificationService\Service;
  */
 
 use DWenzel\NotificationService\Domain\Model\Notification;
+use DWenzel\NotificationService\Domain\Model\NotificationInterface;
 use TYPO3\CMS\Core\Mail\MailMessage;
+use TYPO3\CMS\Core\Service\AbstractService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
@@ -24,9 +26,8 @@ use TYPO3\CMS\Fluid\View\StandaloneView;
  *
  * @package DWenzel\NotificationService\Service
  */
-class NotificationService
+class NotificationService extends AbstractService implements NotificationServiceInterface
 {
-
     /**
      * Object Manager
      *
@@ -46,27 +47,31 @@ class NotificationService
     /**
      * Notify using the given data
      *
-     * @param string $recipient
-     * @param string $sender
-     * @param $subject
-     * @param string $templateName
+     * If multiple recipients will receive the message an array should be used.
+     * Example: array('receiver@domain.org', 'other@domain.org' => 'A name')
+     *
+     * @param string|array $recipients Array of string containing the recipients. If this is a string it will be considered a comma separated list of email addresses.
+     * @param string $sender The senders email address
+     * @param string $subject Subject
+     * @param string $templateName Template name.
      * @param null|string $format
-     * @param $folderName
-     * @param array $variables
-     * @param array|null $attachments Variables which are passed to the template for rendering
+     * @param string $folderName Folder name
+     * @param array $variables Optional array with variables passed to the template for rendering
      * @param array $attachments
-     * @return \bool
+     * @return bool True on success, otherwise false
      */
-    public function notify($recipient, $sender, $subject, $templateName, $format = NULL, $folderName, $variables = [], $attachments = NULL)
+    public function notify($recipients, $sender, $subject, $templateName, $format = NULL, $folderName, $variables = [], $attachments = NULL)
     {
         $templateView = $this->buildTemplateView($templateName, $format, $folderName);
         $templateView->assignMultiple($variables);
         $body = $templateView->render();
-        $recipient = GeneralUtility::trimExplode(',', $recipient, true);
+        if(is_string($recipients)) {
+            $recipients = GeneralUtility::trimExplode(',', $recipients, true);
+        }
 
         /** @var $message \TYPO3\CMS\Core\Mail\MailMessage */
         $message = $this->objectManager->get(MailMessage::class);
-        $message->setTo($recipient)
+        $message->setTo($recipients)
             ->setFrom($sender)
             ->setSubject($subject);
         $mailFormat = ($format == 'plain') ? 'text/plain' : 'text/html';
@@ -104,7 +109,7 @@ class NotificationService
      * Sends a prepared notification
      * Returns true on success and false on failure.
      *
-     * @param \DWenzel\NotificationService\Domain\Model\Notification $notification
+     * @param NotificationInterface $notification
      * @return bool
      */
     public function send(&$notification)
@@ -214,8 +219,8 @@ class NotificationService
     /**
      * Clones a given notification
      *
-     * @param \DWenzel\NotificationService\Domain\Model\Notification $oldNotification
-     * @return \DWenzel\NotificationService\Domain\Model\Notification
+     * @param NotificationInterface $oldNotification
+     * @return NotificationInterface
      */
     public function duplicate($oldNotification)
     {
