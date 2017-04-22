@@ -12,7 +12,7 @@ namespace DWenzel\NotificationService\Tests\Unit\Service;
  */
 
 use TYPO3\CMS\Core\Mail\MailMessage;
-use TYPO3\CMS\Core\Tests\UnitTestCase;
+use Nimut\TestingFramework\TestCase\UnitTestCase;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 use DWenzel\NotificationService\Domain\Model\Notification;

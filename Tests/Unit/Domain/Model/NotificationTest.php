@@ -4,7 +4,7 @@ namespace DWenzel\NotificationService\Tests\Unit\Domain\Model;
 
 use DWenzel\NotificationService\Domain\Model\Notification;
 use DWenzel\NotificationService\Domain\Model\NotificationInterface;
-use TYPO3\CMS\Core\Tests\UnitTestCase;
+use Nimut\TestingFramework\TestCase\UnitTestCase;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
